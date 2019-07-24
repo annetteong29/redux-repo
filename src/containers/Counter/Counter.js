@@ -30,7 +30,7 @@ class Counter extends Component {
         return (
             <div>
                 <CounterOutput value={this.props.ctr} />
-                <CounterControl label="Increment" clicked={() => this.counterChangedHandler( 'inc' )} />
+                <CounterControl label="Increment" clicked={this.props.onIncrementCounter} />
                 <CounterControl label="Decrement" clicked={() => this.counterChangedHandler( 'dec' )}  />
                 <CounterControl label="Add 5" clicked={() => this.counterChangedHandler( 'add', 5 )}  />
                 <CounterControl label="Subtract 5" clicked={() => this.counterChangedHandler( 'sub', 5 )}  />
@@ -46,7 +46,14 @@ class Counter extends Component {
 const mapStateToProps = state => {
     return {
         ctr: state.counter
-    }
-}
+    };
+};
 
-export default connect(mapStateToProps)(Counter);
+// (what kind of actions I want to dispatch from this container)
+const mapDispatchToProps = dispatch => {
+    return {
+        onIncrementCounter: () => dispatch({type: 'INCREMENT'})
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Counter);
