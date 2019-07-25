@@ -1,3 +1,5 @@
+import * as actionTypes from './actions';
+
 const initialState = {
     counter: 0,
     results: []
@@ -5,38 +7,36 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
-        case ('INCREMENT'):
+        case actionTypes.INCREMENT:
             // not as good
             const newState = Object.assign({}, state);
             newState.counter = state.counter + 1;
             return newState;
-        case ('DECREMENT'):
+        case actionTypes.DECREMENT:
             return {
                 ...state, 
                 counter: state.counter - 1
             }
-        case ('ADD'):
+        case actionTypes.ADD:
            return {
                ...state, 
                 counter: state.counter + action.value
         } 
-        case ('SUBTRACT'):
+        case actionTypes.SUBTRACT:
            return {
                ...state,
                 counter: state.counter - action.value
         } 
-        case ('STORE_RESULT'):
+        case actionTypes.STORE_RESULT:
             return {
                 ...state,
                 results: state.results.concat({id: new Date(), value: state.counter})
             }
-        case ('DELETE_RESULT'):
+        case actionTypes.DELETE_RESULT:
             // const id = 2;
             // state.results.splice(id, 1); MUTABLE! no.
             // const newArray = [...state.results];
             // newArray.splice(id, 1); 
-            // // if elements in array are objects,
-            // // that's another problem
             const updatedArray = state.results.filter(
                 // only results that have id that AREN'T 
                 // id of selected element are accepted
@@ -45,10 +45,6 @@ const reducer = (state = initialState, action) => {
             return Object.assign({}, state, {
                 results: updatedArray
             });
-            // {
-                // ...state,
-                // results: updatedArray
-            // }
     }
     // default state
     return state;
